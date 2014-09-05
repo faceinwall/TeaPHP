@@ -158,9 +158,9 @@ class View {
 		/*** extract all the variables ***/
 		extract($this->variables);
 		if (file_exists($template_file)) {
-			if (ob_get_length() > 0){
-				ob_end_clean();	
-			}
+			// if (ob_get_length() > 0){
+			// 	ob_end_clean();	
+			// }
 			ob_start();
 			include($template_file);
 			$output = ob_get_contents();

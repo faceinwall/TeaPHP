@@ -190,9 +190,16 @@ class Grid {
 				}
 
 
+				$pa_structure = parse_url($_SERVER['REQUEST_URI']);
 				$this->params = array('sort' => $next_SORT, 'order' => $next_ORDER);
-				$url = new \engine\net\Url($this->baseUrl,$this->params);
-				echo $_SERVER['REQUEST_URI'], '<br/>';
+
+				//重新构造 query string
+				if (isset($pa_structure['query'])) {
+					parse_str($pa_structure['query'], $queryParams);
+					$this->params = array_merge($queryParams, $this->params);
+				}
+
+				$url      = new \engine\net\Url($this->baseUrl,$this->params);
 				$thTitile = $columnName;
 
 				if ($this->currentSort == $columnName || (empty($this->currentSort) && $this->defaultSort == $columnName)) {
@@ -224,15 +231,15 @@ class Grid {
 			foreach ($this->gridTd as $rowNo=> $column) {
 				if (is_array($column)) {
 
-					$gridTd_HTML .= "<TR color=\"$column\">\r\n";
+					$gridTd_HTML .= @"<TR style=\"color:{$column['color']}\">\r\n";
 
 					foreach ($this->gridTh as $columnName => $columnDefinition) {
-						$gridTh_HTML .= '<TD';
+						$gridTd_HTML .= '<TD';
 						$gridTd_HTML .= isset($columnDefinition['align']) && $columnDefinition['align']? " align=\"{$columnDefinition['align']}\"" : '';
 						$gridTd_HTML .= isset($columnDefinition['class']) && $columnDefinition['class']? " class=\"{$columnDefinition['class']}\"" : '';
+						$gridTd_HTML .= '>';
 
 						if (array_key_exists($columnName, $column)) $gridTd_HTML .= $column[$columnName];
-
 						$gridTd_HTML .= "</TD>\r\n";	
 					}
 				} else {
@@ -245,6 +252,7 @@ class Grid {
 			$gridTd_HTML .= "<TR>\r\n";
 			$gridTd_HTML .= "<TD COLSPAN=\"".count($this->gridTh)."\">";
 		}
+		return $gridTd_HTML;
 	}
 }
 ?>

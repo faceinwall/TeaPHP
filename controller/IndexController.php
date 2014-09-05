@@ -6,14 +6,38 @@ class IndexController extends \engine\core\Controller { /* extends BaseControlle
 	public function actionIndex(){
 		header('content-type:text/html;charset=utf-8');
 		$data = array(
-			'姓名' => array('width'=>'80', 'align' => 'center', 'sort'=>'name', 'order'=>'ASC'),
+			'姓名' => array('width'=>'80', 'align' => 'center', 'sort'=>'username', 'order'=>'ASC'),
 			'年纪' => array('width'=>'60', 'align' => 'center', 'sort'=>'age', 'order'=>'ASC'),
 			'性别' => array('width'=>'90', 'align' => 'center', 'sort'=>'sex', 'order'=>'ASC'),
 		);
 		$Grid = new \library\Grid();
 		$Grid->gridTh = $data;
 		$Grid->setCurrentOrder($this->request->get()->sort, $this->request->get()->order);
-		echo $Grid->generalGrid();
+
+		$userList = \Tea::app()->model('tm_user')->many();
+		$count    = count($userList);
+		$page     = new \library\Page($count);
+
+		$sort  = !$this->request->get('sort') ? '姓名': $this->request->get('sort');
+		$byway = !$this->request->get('order') ? 'desc': $this->request->get('order');
+
+		$userPageList = \Tea::app()->model('tm_user')
+			->orderBy($data[$sort]['sort'], $byway)
+			->limit($page->offset)
+			->offset($page->begin)
+			->many();
+
+		foreach ($userPageList as $key => $row) {
+			$Grid->addGridTd(array(
+					'姓名' => $row['username'] ,
+					'年纪' => $row['age'],
+					'性别' => $row['sex'],
+					'color' => 'green',
+				));
+		}	
+		
+		$table = $Grid->generalGrid();
+		$this->render('index.php', array('table'=>$table, 'page' =>$page->showPage()));
 		// var_dump($Grid);
 		// echo $_GET['isd'], '<br/>';
 		// $this->vendor('third.Demo');

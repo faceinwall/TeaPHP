@@ -79,12 +79,12 @@ class Page {
 	 * @return array
 	 */
 	public function showPage(array $display = array(0, 1, 2, 3, 4, 5, 6, 7, 8)) {
-		return $this->total. $this->config['header'].
+		return '<span class="page-records">'.$this->total. $this->config['header'].'</span>'.'<span class="page-lists">'.
 				$this->first().
 				$this->prev().
 				$this->pageList().
 				$this->next().
-				$this->last().
+				$this->last().'</span>'.
 				$this->goPage();	
 	}
 
@@ -93,7 +93,7 @@ class Page {
 	 * @param string $params
 	 */
 	private function getUir($params) {
-		$url   = $_SERVER['REQUEST_URI']. (strpos($_SERVER['REQUEST_URI'], '?') ? '' : '?').$param;
+		$url   = $_SERVER['REQUEST_URI']. (strpos($_SERVER['REQUEST_URI'], '?') ? '' : '?').$params;
 		$parse = parse_url($url);
 
 		if (isset($parse['query'])) {
@@ -103,6 +103,10 @@ class Page {
 			$url = $parse['path'] . '?'.http_build_query($queryParams);
 		}
 		return $url;
+	}
+
+	private function getLimit() {
+		return array(($this->page - 1) * $this->pageRows, $this->pageRows);
 	}
 
 	/**
@@ -127,7 +131,7 @@ class Page {
 	 */
 	private function first() {
 		return $this->page == 1 ? '' : 
-			'<a href="'.$this->uri.'&page=1">'.$this->config['first'].'</a>';
+			'<a href="'.$this->uri.'&page=1" class="page-first">'.$this->config['first'].'</a>';
 	}
 
 	/**
@@ -136,7 +140,7 @@ class Page {
 	 */
 	private function prev() {
 		return $this->page == 1 ? '':
-			'<a href="'.$this->uri.'&page='.($this->page -1).'">'.$this->config['prev'].'</a>';
+			'<a href="'.$this->uri.'&page='.($this->page -1).'" class="page-prev">'.$this->config['prev'].'</a>';
 	}
 
 	/**
@@ -155,13 +159,13 @@ class Page {
 			$link .= '<a href="'.$this->uri.'&page='.$page.'">'.$page.'</a>';
 		}
 
-		$link .= 'a href="'.$this->uri.'&page='.$page.'" class="current">'.$page.'</a>';
+		$link .= '<a href="'.$this->uri.'&page='.$this->page.'" class="current">'.$this->page.'</a>';
 
 		for ($i = 1; $i <= $i_Nums; $i++) {
 			$page = $this->page + $i;
 
 			if ($page <= $this->pageNums) {
-				$link .= '<a href"'.$this->uri.'&page='.$page.'">'.$page.'</a>';
+				$link .= '<a href="'.$this->uri.'&page='.$page.'">'.$page.'</a>';
 			} else {
 				break;
 			}
@@ -193,14 +197,14 @@ class Page {
 	 * @return string
 	 */
 	private function goPage() {
-		return '<input type="text" onkeydown="javascript:if (event.keyCode == 13){ var page=(this.value >)'.
-			$this->pageNums.')?'.
+		return '<span class="page-go"><input type="text" onkeydown="javascript:if (event.keyCode == 13){ var page=(this.value >'.
+			$this->pageNums.') ? '.
 			$this->pageNums.':this.value; location=\''.
-			$this->uri.'&page=\' + page \'\'}" value="'.
+			$this->uri.'&page=\' + page}" value="'.
 			$this->page.'" style="width:25px"><input type="button" value="GO" onclick="javascript: var page = (this.previousSibling.value>'.
 			$this->pageNums.')?'.$this->pageNums.':this.previousSibling.value;location=\''.
-			$this->uri.'&page=\' + page \'\'">';
+			$this->uri.'&page=\' + page"></span>';
 	}
 
 }
- ?>
+?>
