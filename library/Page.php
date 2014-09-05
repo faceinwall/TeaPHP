@@ -79,7 +79,9 @@ class Page {
 	 * @return array
 	 */
 	public function showPage(array $display = array(0, 1, 2, 3, 4, 5, 6, 7, 8)) {
-		return '<span class="page-records">'.$this->total. $this->config['header'].'</span>'.'<span class="page-lists">'.
+		return '<span class="page-records">'.
+				$this->total. 
+				$this->config['header'].'</span>'.'<span class="page-lists">'.
 				$this->first().
 				$this->prev().
 				$this->pageList().
