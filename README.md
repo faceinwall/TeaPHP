@@ -22,7 +22,7 @@ class HelloController extends \engin\core\Controller {
 ```
 
 # 路由
-TeaPHP使用如下的路由方式: http://example.com?r=&lt;module&gt;/&lt;controller&gt;/&lt;action&gt;
+TeaPHP使用如下的路由方式: http://example.com?r=module/controller/action
 
 module: (可选) TeaPHP的控制层支持使用分组,更方便代码组织应用,如
 <pre>
