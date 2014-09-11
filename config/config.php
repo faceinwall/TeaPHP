@@ -28,6 +28,10 @@ return array(
 	'session' => true,
 
 	//第三方类库目录 (vendor)
-	'vendor_dir' => 'vendor'
+	'vendor_dir' => 'vendor',
+
+	//应用配置
+	'list_row' => 5,
+
 );
  ?>

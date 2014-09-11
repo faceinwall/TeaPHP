@@ -6,10 +6,9 @@
 .pagination span .page-first,
 .pagination span .page-last,
 .pagination span .page-prev,
-.pagination span .page-next, {
-	width: 60px;
-}
+.pagination span .page-next, {width: 60px; }
 .pagination .current {background: green;}
+.pagination a {text-decoration: none;}
 </style>
 <div class='data-grid'>
 	<?= $table ?>

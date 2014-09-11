@@ -1,10 +1,10 @@
 <?php 
 namespace controller;
 use controller\BaseController;
-class IndexController extends \engine\core\Controller { /* extends BaseController { */
+class IndexController extends BaseController {
 
 	public function actionIndex(){
-		// header('content-type:text/html;charset=utf-8');
+		header('content-type:text/html;charset=utf-8');
 		// $data = array(
 		// 	'姓名' => array('width'=>'80', 'align' => 'center', 'sort'=>'username', 'order'=>'ASC'),
 		// 	'年纪' => array('width'=>'60', 'align' => 'center', 'sort'=>'age', 'order'=>'ASC'),
@@ -40,14 +40,49 @@ class IndexController extends \engine\core\Controller { /* extends BaseControlle
 		// $this->render('index.php', array('table'=>$table, 'page' =>$page->showPage()));
 
 
-		$auth = new \library\Auth();
+		// $auth = new \library\Auth();
 
-		var_dump($auth);
 
-		$type = 1;
+		// $uid_xiaowang = 1; // 小王的uid
+		// $uid_xiaocheng = 2; // 小陈的uid
 		
-		// var_dump($auth->getAccessRules(1, $type));
-		$auth->check(array('do1', 'do'), 1);
+		// echo 'xiao wang'; var_dump($auth->check('show_button1', $uid_xiaowang));
+		// echo 'xiao cheng'; var_dump($auth->check('show_button1', $uid_xiaocheng));
+
+
+		$header = array(
+			'ID'    => array('width'=>'80', 'align' => 'center', 'sort'=>'id', 'order'=>'ASC'),
+			'名称'  => array('width'=>'60', 'align' => 'center', 'sort'=>'name', 'order'=>'ASC'),
+			'URL'   => array('width'=>'90', 'align' => 'center', 'sort'=>'url', 'order'=>'ASC'),
+		);
+
+
+		$Grid = new \library\Grid();
+		$Grid->gridTh = $header;
+		$Grid->setCurrentOrder($this->request->get()->sort, $this->request->get()->order);
+
+		if ($this->request->get('sort')){
+			$condition = array(
+				'order' => array($header[$this->request->get()->sort]['sort'], $this->request->get()->order),
+			);	
+		} else{
+			$condition = array();
+		}
+
+		$page = $this->page('\model\Menu', $condition);
+
+		foreach ($page->list as $key => $row) {
+			$Grid->addGridTd(array(
+					'ID'    => $row['id'].'<a href="#">☆</a>' ,
+					'名称'  => $row['name'],
+					'URL'   => $row['url'],
+					'color' => 'green',
+				));
+		}
+
+		$table = $Grid->generalGrid();
+		$this->render('index.php', array('table'=>$table, 'page' =>$page->page));
+
 		// $t = implode(',', (array)$type);	
 		// echo $type;
 		// var_dump($auth->getUserInformation(3));

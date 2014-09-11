@@ -11,10 +11,16 @@
 			<input type="text" name="name" value>
 		</p>
 		<p>
-			<label>菜单类型 <?=(\library\Auth::powerCheck('菜单管理','add')) ?></label>
-
-			<input type="radio" name="type" value="1">本系统模块
-			<input type="radio" name="type" value="2">外链
+			<label>排序</label>
+			<input type="text" name="sort" value>
+		</p>
+		<p>
+			<label>链接</label>
+			<input type="text" name="url" value>
+		</p>	
+		<p>
+			<label>分组</label>
+			<input type="text" name="group" value>
 		</p>
 		<hr>
 		<fieldset>

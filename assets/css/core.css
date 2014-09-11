@@ -1,0 +1,9 @@
+* {padding: 0px;margin: 0px;}
+ul {list-style: none;}
+a {text-decoration: none;}
+#nav .ml,#nav li {float: left;margin: 2px;}
+#nav .mr{float: right;}
+#main #sider {float: left;width: 205px;}
+#main #frame {float: left;width: auto;}
+.clear:after {display: block; content: '.'; overflow: hidden; visibility: hidden; clear: both; }
+.clear{clear: both; zoom: 1; };

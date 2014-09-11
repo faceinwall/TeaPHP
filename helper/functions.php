@@ -6,4 +6,8 @@ function get_uid() {
 function user_exists_online() {
 	return true;	
 }
+
+function get_cached_config($name) {
+	return '';
+}
  ?>

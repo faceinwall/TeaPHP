@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50617
 File Encoding         : 65001
 
-Date: 2014-09-10 19:14:58
+Date: 2014-09-11 18:15:25
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -30,7 +30,7 @@ CREATE TABLE `tm_auth_group` (
 -- ----------------------------
 -- Records of tm_auth_group
 -- ----------------------------
-INSERT INTO `tm_auth_group` VALUES ('1', '财务部', '1', '1,2');
+INSERT INTO `tm_auth_group` VALUES ('1', '财务部', '1', '1,2,4');
 INSERT INTO `tm_auth_group` VALUES ('2', '人事部', '1', '1');
 INSERT INTO `tm_auth_group` VALUES ('3', '技术部', '1', '1,2,3,4');
 
@@ -49,8 +49,8 @@ CREATE TABLE `tm_auth_group_access` (
 -- ----------------------------
 -- Records of tm_auth_group_access
 -- ----------------------------
-INSERT INTO `tm_auth_group_access` VALUES ('1', '1');
-INSERT INTO `tm_auth_group_access` VALUES ('2', '2');
+INSERT INTO `tm_auth_group_access` VALUES ('1', '2');
+INSERT INTO `tm_auth_group_access` VALUES ('2', '1');
 INSERT INTO `tm_auth_group_access` VALUES ('3', '2');
 
 -- ----------------------------
@@ -66,7 +66,7 @@ CREATE TABLE `tm_auth_rule` (
   `condition` char(100) NOT NULL DEFAULT '',
   PRIMARY KEY (`rule_id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tm_auth_rule
@@ -74,23 +74,45 @@ CREATE TABLE `tm_auth_rule` (
 INSERT INTO `tm_auth_rule` VALUES ('1', 'do1', 'somethink1', '1', '1', '');
 INSERT INTO `tm_auth_rule` VALUES ('2', 'do2', 'somethink2', '1', '1', '');
 INSERT INTO `tm_auth_rule` VALUES ('3', 'do3', 'somethink3', '1', '1', '');
-INSERT INTO `tm_auth_rule` VALUES ('4', 'do4', 'somethink4', '1', '1', '');
+INSERT INTO `tm_auth_rule` VALUES ('4', 'show_button1', 'show', '1', '1', '');
+INSERT INTO `tm_auth_rule` VALUES ('5', 'show_button122', 'show', '1', '1', '');
 
 -- ----------------------------
 -- Table structure for tm_menu
 -- ----------------------------
 DROP TABLE IF EXISTS `tm_menu`;
 CREATE TABLE `tm_menu` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(20) NOT NULL,
-  `url` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+  `menu_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) CHARACTER SET latin1 NOT NULL,
+  `url` varchar(255) CHARACTER SET latin1 NOT NULL,
+  `group` varchar(80) NOT NULL,
+  `status` int(2) NOT NULL DEFAULT '1',
+  `tip` varchar(255) NOT NULL,
+  `hide` int(2) NOT NULL DEFAULT '1',
+  `is_dev` int(2) NOT NULL,
+  PRIMARY KEY (`menu_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tm_menu
 -- ----------------------------
-INSERT INTO `tm_menu` VALUES ('1', 'system', '/system/index');
+INSERT INTO `tm_menu` VALUES ('1', 'system', '/system/index', '', '1', '', '1', '0');
+INSERT INTO `tm_menu` VALUES ('2', 'a', '/system/index', '', '1', '', '1', '0');
+INSERT INTO `tm_menu` VALUES ('3', 'b', '/system/index', '', '1', '', '1', '0');
+INSERT INTO `tm_menu` VALUES ('4', 'c', '/system/index', '', '1', '', '1', '0');
+INSERT INTO `tm_menu` VALUES ('5', 'd', '/system/index', '', '1', '', '1', '0');
+INSERT INTO `tm_menu` VALUES ('6', 'e', '/system/index', '', '1', '', '1', '0');
+INSERT INTO `tm_menu` VALUES ('7', 'f', '/system/index', '', '1', '', '1', '0');
+INSERT INTO `tm_menu` VALUES ('8', 's', '/system/index', '', '1', '', '1', '0');
+INSERT INTO `tm_menu` VALUES ('9', 'w', '/system/index', '', '1', '', '1', '0');
+INSERT INTO `tm_menu` VALUES ('10', 'v', '/system/index', '', '1', '', '1', '0');
+INSERT INTO `tm_menu` VALUES ('11', 'c', '/system/index', '', '1', '', '1', '0');
+INSERT INTO `tm_menu` VALUES ('12', 'x', '/system/index', '', '1', '', '1', '0');
+INSERT INTO `tm_menu` VALUES ('13', 'a', '/system/index', '', '1', '', '1', '0');
+INSERT INTO `tm_menu` VALUES ('14', 'd', '/system/index', '', '1', '', '1', '0');
+INSERT INTO `tm_menu` VALUES ('15', 'h', '/system/index', '', '1', '', '1', '0');
+INSERT INTO `tm_menu` VALUES ('16', 'y', '/system/index', '', '1', '', '1', '0');
+INSERT INTO `tm_menu` VALUES ('17', 'z', '/system/index', '', '1', '', '1', '0');
 
 -- ----------------------------
 -- Table structure for tm_user
