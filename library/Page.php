@@ -199,13 +199,20 @@ class Page {
 	 * @return string
 	 */
 	private function goPage() {
-		return '<span class="page-go"><input type="text" onkeydown="javascript:if (event.keyCode == 13){ var page=(this.value >'.
-			$this->pageNums.') ? '.
-			$this->pageNums.':this.value; location=\''.
-			$this->uri.'&page=\' + page}" value="'.
-			$this->page.'" style="width:25px"><input type="button" value="GO" onclick="javascript: var page = (this.previousSibling.value>'.
-			$this->pageNums.')?'.$this->pageNums.':this.previousSibling.value;location=\''.
-			$this->uri.'&page=\' + page"></span>';
+		$str = sprintf('<span class="page-go">
+							<input type="text" onkeydown="javascript: if (event.keyCode == 13){ var page=(this.value > %d) ? %d : this.value; location=\'%s&page=\'+page}" value="%d"/>
+							<input type="button" value="GO" onclick="javascript: var page = (this.previousSibling.value > %d) ? %d: this.previousSibling.value; location=\'%s&page=\'+page"/>
+						</span>',
+				$this->pageNums,
+				$this->pageNums,
+				$this->uri,
+				$this->page,
+				$this->pageNums,
+				$this->pageNums,
+				$this->uri
+				);
+
+		return $str;
 	}
 
 }
