@@ -1,10 +1,10 @@
 <?php 
 class Tea {
-	/**
+    /**
      * 应用程序程序实例
      * @var $app
-	 */
-	private static $app = null;
+     */
+    private static $app = null;
 
     /**
      * 创建web应用程序实例
@@ -12,25 +12,25 @@ class Tea {
      * @return \engine\net\Webapp   返回应用程序实例
      */
     public static function createWebApplication($config) {
-		static $initialized = false;
+        static $initialized = false;
 
-		if (!$initialized) {
-			require_once __DIR__.'/autoload.php';
+        if (!$initialized) {
+            require_once __DIR__.'/autoload.php';
 
-			self::$app = new \engine\net\Webapp($config);
+            self::$app = new \engine\net\Webapp($config);
 
-			$initialized = true;
-		}
-		return self::$app;
-	}
+            $initialized = true;
+        }
+        return self::$app;
+    }
 
-	/**
+    /**
      * 获取应用程序实例
-	 * @return object
-	 */
-	public static function app() {
-		return self::$app;
-	}
+     * @return object
+     */
+    public static function app() {
+        return self::$app;
+    }
 
     /**
      * 调用webapp的静态方法
@@ -45,8 +45,8 @@ class Tea {
     }
 
     //不充许该类实例化
-	private function __construct() {}
-	private function __destruct() {}
-	private function __clone() {}
+    private function __construct() {}
+    private function __destruct() {}
+    private function __clone() {}
 }
  ?>

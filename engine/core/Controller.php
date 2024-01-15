@@ -31,16 +31,12 @@ abstract class Controller extends Engine {
 	public function __construct(\engine\net\Request $request, \engine\net\Response $response) {
 		$this->request  = $request;
 		$this->response = $response;
-		$this->view     = new View();
+		$this->view = new View();
 
 		//the first run method of controller
 		if (method_exists($this, 'start')) {
 			$this->start();
 		}
-	}
-
-	public function __get($name) {
-		return isset($this->$name) ? $this->$name: null;
 	}
 
 	/**

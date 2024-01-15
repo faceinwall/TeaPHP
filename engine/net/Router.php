@@ -1,6 +1,5 @@
 <?php 
 namespace engine\net;
-use engine\net\Route;
 
 class Router {
     /**
@@ -88,4 +87,3 @@ class Router {
         return $uri->queryParams;
     }
 }
- ?>
