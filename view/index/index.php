@@ -1,1 +1,1 @@
-<p>index</p>
+<p>index page</p>

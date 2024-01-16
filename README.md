@@ -51,9 +51,4 @@ $blog->title = 'title';
 $blog->content = 'content';
 $blog->save();
 
-$rs = $blog->query('select * from blog limit 1');
-var_dump($rs);
-
-$rs = $blog->query('update blog set title=? where id=?', 'demo', 1);
-var_dump($rs);
 ```

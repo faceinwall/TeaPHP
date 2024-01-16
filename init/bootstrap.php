@@ -41,7 +41,7 @@ class Tea {
     public static function __callStatic($name, $params) {
         require_once __DIR__.'/autoload.php';
 
-        return \engine\core\Dispatcher::invokeMethod(array(self::$app, $name), $params);
+        return  \engine\core\Dispatcher::invokeMethod(array(self::$app, $name), $params);
     }
 
     //不充许该类实例化

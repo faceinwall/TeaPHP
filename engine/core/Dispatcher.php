@@ -17,7 +17,7 @@ class Dispatcher {
      * @param Response $response
      * @throws Exception
      */
-	public function route(Request $request, Response $response) {
+    public function route(Request $request, Response $response) {
         $router = new Router();
         
         if ($router->callback) {
@@ -28,14 +28,12 @@ class Dispatcher {
             $this->execute($router->callback, $params);
         } else{
             // 若路由不匹配, 发送404
-            $response->status(404)
-                ->write(
-                    '<h1>404 Not Found</h1>'.
-                    '<h3>Tha page you have requested could not found.</h3>'
-                )
-                ->send();
+            $response->status(404)->write(
+                '<h1>404 Not Found</h1>'.
+                '<h3>Tha page you have requested could not found.</h3>'
+            )->send();
         }
-	}
+    }
 
     /**
      * 执行回调处理
@@ -51,11 +49,21 @@ class Dispatcher {
             $instance = new $class(array_pop($params), array_pop($params));
 
             if (is_callable(array($instance, $method))) {
-                return call_user_func_array(array($instance, $method), $params);
-            } else {
-                throw new \Exception("method `$method` of `$class` not callable!", 1);
+                return self::invokeMethod(array($instance, $method), $params);
             }
+            throw new \Exception("method `$method` of `$class` not callable!", 1);
         }
         throw new \Exception("Class `$class` not found!", 1);
+    }
+
+    /**
+     * Invokes a method.
+     *
+     * @param mixed $func Class method
+     * @param array $params Class method parameters
+     * @return mixed Function results
+     */
+    public static function invokeMethod($func, array &$params = array()) {
+        return call_user_func_array($func, $params);
     }
 }

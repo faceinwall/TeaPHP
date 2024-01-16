@@ -1,7 +1,7 @@
 <?php 
 namespace engine\core;
 
-class Engine{
+class Engine {
     /**
      * 属性
      * @var array
@@ -23,7 +23,8 @@ class Engine{
      * @return mixed the property value
      */
     public function __get($name) {
-        return isset($this->attributes[$name]) ? $this->attributes[$name] : null;
+        return isset($this->attributes[$name]) ? $this->attributes[$name] : 
+            (isset($this->$name) ? $this->$name : null);
     }
 
     /**

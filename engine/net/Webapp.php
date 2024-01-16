@@ -4,6 +4,7 @@ namespace engine\net;
 use engine\net\Request;
 use engine\net\Response;
 use engine\core\Dispatcher;
+use engine\Db\Db;
 
 class Webapp extends \engine\core\Engine {
     /**
@@ -36,7 +37,7 @@ class Webapp extends \engine\core\Engine {
      * @param array $config
      */
     public function __construct(array $config) {
-        self::$config     = $config;
+        self::$config = $config;
         $this->initialize();
     }
 
@@ -55,25 +56,45 @@ class Webapp extends \engine\core\Engine {
      * 开启session
      */
     private function enableSession() {
-        if (is_bool($this->config('session'))) {
+        if (is_bool(self::config('session'))) {
             session_start();
         }
     }
 
     /**
-     * 获取配置文件的配置值
+     * 初始化Db, 调用方式: \Tea::db()
+     */
+    static public function db() {
+        if (self::$db != null) {
+            return self::$db;
+        }
+        $db = new Db(array(
+            'db_type'  => self::$config['db_type'],
+            'db_port'  => self::$config['db_port'],
+            'hostname' => self::$config['hostname'],
+            'database' => self::$config['database'],
+            'username' => self::$config['username'],
+            'password' => self::$config['password'],
+            'table_prefix' => self::$config['table_prefix'],
+        
+            'sqlite_path' => self::$config['sqlite_path'],
+        ));
+        
+        self::$db = $db;
+        return $db;
+    }
+
+    /**
+     * 获取配置文件的配置值, 调用方式 \Tea::config('abc')
      * @param stirng $name  配置名称
      * @param string $value 配置值
      * @return string
      */
-    public function config($name, $value = '') {
+    static public function config($name, $value = '') {
         if (array_key_exists($name, self::$config)){
-            if (empty($value)){
-                return self::$config[$name];
-            }else{
-                self::$config[$name] = $value;
-            }
+            return self::$config[$name];
         }
+        return $value;
     }
 
     /**

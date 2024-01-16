@@ -3,7 +3,7 @@ namespace engine\core;
 
 class Loader {
     /**
-     * @var Autoload directories
+     * @var array Autoload directories
      */
     protected static $dirs = array();
 
@@ -13,7 +13,7 @@ class Loader {
      * @param bool $enabled Enable/disable autoloading
      * @param mixed $dirs Autoload directories
      */
-    public static function autoLoad($enabled = true, $dirs) {
+    public static function autoLoad($enabled, $dirs) {
         if ($enabled) {
             spl_autoload_register(array(__CLASS__, 'loadClass'));
         } else {
@@ -57,4 +57,3 @@ class Loader {
         }
     }
 }
- ?>

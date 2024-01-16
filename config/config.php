@@ -1,13 +1,15 @@
 <?php 
 return array(
     //数据库配置
-    'dbtype'   =>'pdomysql', // for dbbuilder db engine
-    'mdbtype'  => 'mysql', //for medoo db egnine
+    'db_type'  =>'mysql', 
     'hostname' => 'localhost',
-    'database' => 'test',
+    'db_port'  => '3306',
+    'database' => '28prints_com',
     'username' => 'root',
-    'password' => '',
-    'table_prefix' => 'tm_',
+    'password' => 'root_r',
+    'table_prefix' => 'oc_',
+
+    'sqlite_path' => '',
 
     //模板配置
     'template_dir'    => 'view', //模板目录

@@ -148,4 +148,3 @@ class SimpleFileCache implements ICache {
         return false;
     }
 }
- ?>

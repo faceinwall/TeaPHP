@@ -33,6 +33,16 @@ class Page {
     private $listNums = 8;
 
     /**
+     * @var string
+     */
+    private $uri;
+
+    /**
+     * @var int
+     */
+    private $page;
+
+    /**
      * @var array 输出的配置参数
      */
     private $config =array(

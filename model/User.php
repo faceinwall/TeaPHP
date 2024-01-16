@@ -1,36 +1,34 @@
 <?php 
 namespace model;
 
-class User {
-	public $tablename = 'tm_user';
+use engine\core\Model;
 
-	public function autoLogin() {
-		$username = \Tea::app()->request->post()->username;	
-		$password = \Tea::app()->request->post()->password;
+class User extends Model {
+    public $table = 'user';
 
-		if (!$this->validator($username, $password)) {
-			$row = @\Tea::model($this->tablename)
-				->where(array('name' => $username, 'pass'=>md5($password)))
-				->one();
-			if ($row) {
-				$_SESSION['id'] = $row['id'];
-				return true;
-			}
-		}
-		return false;
-	}
+    public function autoLogin() {
+        $username = \Tea::app()->request->post()->username;	
+        $password = \Tea::app()->request->post()->password;
 
-	public function autoLogout() {
-		unset($_SESSION['id']);
-		//TO do somethin here
-		
-		return true;
-	}
+        if (!$this->validator($username, $password)) {
+            $rs = \Tea::db()->prepare('select * from {user} where username =? limit 1')->bind([$username])->execute();
+            if ($rs->row) {
+                $_SESSION['id'] = $rs->row['user_id'];
+                return true;
+            }
+        }
+        return false;
+    }
 
-	public function validator($username, $password) {
-		if (empty($username) || empty($password)) {
-			return true;
-		}
-		return false;
-	}
+    public function autoLogout() {
+        unset($_SESSION['id']);
+        return true;
+    }
+
+    public function validator($username, $password) {
+        if (empty($username) || empty($password)) {
+            return true;
+        }
+        return false;
+    }
 }
