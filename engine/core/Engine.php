@@ -14,7 +14,11 @@ class Engine {
      * @param mixed $value 属性值
      */
     public function __set($name, $value) {
-        $this->attributes[$name] = $value;
+        if (isset($this->$name)) {
+            $this->$name = $value;
+        } else {
+            $this->attributes[$name] = $value;
+        }
     }
 
     /**
